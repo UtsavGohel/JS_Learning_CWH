@@ -463,26 +463,85 @@
 //     }, 2000);
 // })
 
-let p3 = new Promise((val,err)=>{
-    // console.log("inside p3");
-    setTimeout(()=>{
-        console.log("resolved after 2 sec");
-        val(12)
-    },2000)
-}).then((val)=>{
-    console.log("val",val);
-    let p4 = new Promise((val)=>{
-        setTimeout(()=>{
-            val("promise 2")
-        },2000)
+// let p3 = new Promise((val,err)=>{
+//     // console.log("inside p3");
+//     setTimeout(()=>{
+//         console.log("resolved after 2 sec");
+//         val(12)
+//     },2000)
+// }).then((val)=>{
+//     console.log("val",val);
+//     let p4 = new Promise((val)=>{
+//         setTimeout(()=>{
+//             val("promise 2")
+//         },2000)
+//     })
+//     return p4
+// }).then((val)=>{
+//     console.log("we are done");
+//     return 3;
+// }).then((val)=>{
+//     console.log(val);
+//     return val*2
+// }).then((val)=>{
+//     console.log("Last value is",val);
+// })
+
+
+const loadcript = ((src)=>{
+    return new Promise((val,err)=>{
+        let srcipt = document.createElement("script")
+        srcipt.src = src;
+        document.body.appendChild(srcipt)
+        srcipt.addEventListener('load',()=>{
+            console.log("added src ",src);
+            val(3);
+        })
+        srcipt.addEventListener('error',()=>{
+            console.log("not added src");
+            err(0);
+        })
     })
-    return p4
-}).then((val)=>{
-    console.log("we are done");
-    return 3;
-}).then((val)=>{
-    console.log(val);
-    return val*2
-}).then((val)=>{
-    console.log("Last value is",val);
 })
+
+
+loadcript("https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js").
+then((val)=>{
+    console.log("value is ",val);
+    return 16;
+},(err)=>{
+    console.log("error",err);
+}).then((val)=>{
+    console.log("new value is now ",val);
+},(err)=>{
+    console.log("error in new value ",err);
+})
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
